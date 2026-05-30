@@ -1,5 +1,5 @@
 import styles from './button.module.css'
-export const Button = ({ children, onClick, disabled = false, outlined = false, thin = false, dark = false, height = 'auto', width = 'auto', fontSize = '0.8rem', type = 'button' }) => {
+export const Button = ({ children, onClick, disabled = false, height = '40px', width = 'auto', fontSize = '0.8rem', type = 'button' }) => {
 
     return (
         <button
@@ -7,10 +7,8 @@ export const Button = ({ children, onClick, disabled = false, outlined = false, 
             onClick={onClick}
             className={styles.button_app}
             disabled={disabled}
-            outlined={outlined}
-            thin={thin}
-            dark={dark}
-            style={{ height: height, width: width, fontSize: fontSize }}
+        
+            style={{ height: height, width: width, fontSize: fontSize, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
          
             >
             {children}

@@ -8,10 +8,7 @@ export const ticketApi = axios.create({
 });
 
 export const getTickets = async (filters = [], sorts = []) => {
-  console.log("getTickets filters", filters);
-  console.log("getTickets sorts", sorts);
   const response = await ticketApi.get('/api/tickets', { params: { filters, sorts } });
-  console.log("getTickets response", response.data?.data);
   return response.data?.data;
 }
 

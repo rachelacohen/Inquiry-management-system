@@ -1,16 +1,82 @@
-# React + Vite
+#שיפור קוד קיים
+public function getOpenTickets()
+{
+    return Ticket::where('status', 'open')->get();
+}
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+הסבר הבעיה בקוד:
+הקוד עצמו יעבוד, אך זה קוד פחות קריא ונוח לתחזוקה
+כלומר אם ירצו להוסיף תנאים או משהו נוסף יהיה יותר נוח עם ספריות מובנות של LARAVEL
+במיוחד אם יוסיפו קלט מהמשתמש שאז יכולה להוצר בעיה של SQL Injection 
+בה משתמש יכול להכניס תוכן זדוני ולשנות את השאילתא
 
-Currently, two official plugins are available:
+איך תיקנתי:
+השתמשתי ב Eloquent 
+זו ספריה מובנית של LARAVEL 
+שעובדת מול ה DB בצורה מסודרת, מאובטחת וקלה לתחזוקה של הקוד
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---------------------------------------------------------------------------------------------------------------------------------------
 
-## React Compiler
+הוראות התקנה והרצה לפרויקט:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.	יש להוריד את הפרויקט מגיטהאב בקישור: https://github.com/rachelacohen/Inquiry-management-system.git
+2.	בשביל ה DB:
+-	יש ליצור קובץ .env בתיקית השרת ולהעתיק את התוכן של .env.example  המצורף לתוכו
+-	יש ליצור DB מקומי בשם db_tickets
+-	יש ליצור Login עם שם משתמש וסיסמה 
+-	יש לעדכן את שם המשתמש והסיסמה בקובץ .env  שבשרת בשדות DB_PASSWORD, DB_USERNAME בהתאמה.
+3.	בשביל השרת:
+-	לנווט לתיקית /server
+-	להריץ composer install
+-	להריץ  php artisan migrate
+-	להריץ php artisan serve
+4.	בשביל ה front:
+-	לנווט לתיקיה /front
+-	להריץ npm install
+-	להריץ npm run dev
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+------------------------------------------------------------------------------------------------------------------------------------------
+
+הסבר קצר על מבנה הפרויקט:
+הפרויקט בנוי מצד שרת Laravel וצד לקוח React.js.
+שימוש ב DB רלציוני של SQL Server.
+צד השרת אחראי על התקשורת עם ה DB, והלוגיקה העסקית.
+תיקיות עיקריות:
+
+Server:
+Models:
+אחראית על מבנה היישויות- בשימוש עם ספרית Eloquent איתה עבדנו בפרויקט
+Services:
+אחראית על הלוגיקה העסקית- נקראת מהקונטרולר
+Controllers:
+אליה מגיעות הבקשות מה Routs והיא שולחת אל ה Service ומחזירה את הנתון לצד ה front
+Routes:
+כל בקשה מצד ה front מגיעה ל Route ומשם נשלחת אל הקונטרולר המתאים לפונקציה המתאימה- לפי סוג הבקשה שהגיע מה front
+Requests:
+מגדירה עבור כל יישות את השדות של ה Request שמגיע ל controller אחראית על ולידציה של הנתונים שמגיעים
+Resources:
+מגדירה עבור כל יישות את השדות שיחזרו מהשרת- אם יש צורך מגדירה שדות "מחושבים" - כלומר שדות שלא נמצאים ב DB ישירות אך בשימוש בצד ה front
+database/migrations:
+תיקיית המיגרציות- אחראי על ה DB - יצירת ושינוי טבלאות ב DB
+
+Client:
+components/ui:
+קומפוננטות כלליות שבשימוש במערכת באופן כללי כל תיקיה בתוכו תהיה אחראית על אכיב במערכת ותכלול דף jsx ודף css
+featuers/layouts:
+ה Layout הכללי של המערכת- במקרה שלנו יש רק 1
+features/tickets:
+כל הקומפוננטות שקשורות ליישות Ticket כל תיקיה ברמה הזו מחולקת ל components, hooks, paged, services
+components:
+מה שמרכיב את העמוד הסופי
+pages:
+העמוד הסופי
+hooks:
+פונקציות גלובליות של היישות
+services:
+אחראי על קריאות השרת של היישות
+
+App.jsx:
+שם מוגדר כל הקומפוננטות שבמערכת שיוצגו- כולל ה routes שלהם
+index.css:
+העיצוב הכללי של המערכת

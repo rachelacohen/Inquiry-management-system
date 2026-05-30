@@ -9,7 +9,6 @@ export const userApi = axios.create({
 
 export const getUsers = async () => {
   const response = await userApi.get('/api/users');
-  console.log("getUsers response", response.data?.data);
   return response.data?.data;
 }
 
