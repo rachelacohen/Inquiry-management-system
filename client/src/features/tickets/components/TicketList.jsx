@@ -128,24 +128,33 @@ export const TicketList = () => {
                     <form className="create_ticket_modal" onSubmit={handleCreateTicket}>
                         <Button onClick={() => setIsOpenCreateTicket(false)}>X</Button>
                         <h2> צור פניה</h2>
-                        <Input required={true} type="text" placeholder="כותרת" value={createTicketState.title} onChange={(e) => setCreateTicketState({ ...createTicketState, title: e.target.value })} />
-                        <Input required={true} type="text" placeholder="תיאור" value={createTicketState.description} onChange={(e) => setCreateTicketState({ ...createTicketState, description: e.target.value })} />
-                        <select className="create_ticket_select" type="text" placeholder="סטטוס" value={createTicketState.status} onChange={(e) => setCreateTicketState({ ...createTicketState, status: e.target.value })} >
-                            <option value="open">פתוח</option>
-                            <option value="in_progress">בטיפול</option>
-                            <option value="closed">סגור</option>
-                        </select>
-                        <select className="create_ticket_select" type="text" placeholder="עדיפות" value={createTicketState.priority} onChange={(e) => setCreateTicketState({ ...createTicketState, priority: e.target.value })} >
-                            <option value="low">נמוכה</option>
-                            <option value="medium">בינונית</option>
-                            <option value="high">גבוהה</option>
-                        </select>
-                        <select className="create_ticket_select" type="text" placeholder="משתמש משויך" value={createTicketState.assigned_user_id} onChange={(e) => setCreateTicketState({ ...createTicketState, assigned_user_id: e.target.value })}>
-                            <option value="">בחר משתמש</option>
-                            {users?.length > 0 && users.map((user) => (
-                                <option key={user.id} value={user.id}>{user.name}</option>
-                            ))}
-                        </select>
+                        <Input required={true} type="text" label="כותרת" placeholder="כותרת" value={createTicketState.title} onChange={(e) => setCreateTicketState({ ...createTicketState, title: e.target.value })} />
+                        <Input required={true} type="text" label="תיאור" placeholder="תיאור" value={createTicketState.description} onChange={(e) => setCreateTicketState({ ...createTicketState, description: e.target.value })} />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '1rem', fontWeight: '500', color: '#333' }}>סטטוס</label>
+                            <select className="create_ticket_select" value={createTicketState.status} onChange={(e) => setCreateTicketState({ ...createTicketState, status: e.target.value })} >
+                                <option value="open">פתוח</option>
+                                <option value="in_progress">בטיפול</option>
+                                <option value="closed">סגור</option>
+                            </select>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '1rem', fontWeight: '500', color: '#333' }}>עדיפות</label>
+                            <select className="create_ticket_select" value={createTicketState.priority} onChange={(e) => setCreateTicketState({ ...createTicketState, priority: e.target.value })} >
+                                <option value="low">נמוכה</option>
+                                <option value="medium">בינונית</option>
+                                <option value="high">גבוהה</option>
+                            </select>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '1rem', fontWeight: '500', color: '#333' }}>משתמש משויך</label>
+                            <select className="create_ticket_select" value={createTicketState.assigned_user_id} onChange={(e) => setCreateTicketState({ ...createTicketState, assigned_user_id: e.target.value })}>
+                                <option value="">בחר משתמש</option>
+                                {users?.length > 0 && users.map((user) => (
+                                    <option key={user.id} value={user.id}>{user.name}</option>
+                                ))}
+                            </select>
+                        </div>
                         <Button type="submit">שמור</Button>
                     </form>
                 </>
